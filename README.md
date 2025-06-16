@@ -1,5 +1,5 @@
 
-# 🎬 Movie Recommender System
+# 🎬BingeBuddy
 
 A content-based movie recommendation system that suggests similar movies based on cosine similarity of movie features.
 
