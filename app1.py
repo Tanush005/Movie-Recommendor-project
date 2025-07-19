@@ -38,15 +38,36 @@ st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
 st.markdown("<h1 style='text-align: center; color: white;'>🎬 Movie Recommender System</h1>", unsafe_allow_html=True)
 
-# Load data
-try:
+# # Load data
+# try:
+#     similarity = pickle.load(open('similarity.pkl', 'rb'))
+#     movies = pickle.load(open('movies.pkl', 'rb'))
+#     movie1 = pickle.load(open('movie1.pkl', 'rb'))
+#     movies_list = movies['title'].values
+# except FileNotFoundError as e:
+#     st.error(f"Error loading data files: {e}")
+#     st.stop()
+import urllib.request
+
+@st.cache_resource
+def load_data():
+    # ✅ Use your Google Drive direct download link here:
+    url = "https://drive.google.com/uc?export=download&id=1TEY4cOXwSzZP1F5VOSHKcePuDCKFzVej"
+    urllib.request.urlretrieve(url, "similarity.pkl")
+
     similarity = pickle.load(open('similarity.pkl', 'rb'))
     movies = pickle.load(open('movies.pkl', 'rb'))
     movie1 = pickle.load(open('movie1.pkl', 'rb'))
+    return similarity, movies, movie1
+
+# Load models and handle errors
+try:
+    similarity, movies, movie1 = load_data()
     movies_list = movies['title'].values
-except FileNotFoundError as e:
+except Exception as e:
     st.error(f"Error loading data files: {e}")
     st.stop()
+
 
 # Recommendation Function
 def recommend(movie):
